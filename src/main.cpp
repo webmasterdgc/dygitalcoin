@@ -35,7 +35,7 @@ CTxMemPool mempool;
 unsigned int nTransactionsUpdated = 0;
 
 map<uint256, CBlockIndex*> mapBlockIndex;
-uint256 hashGenesisBlock("0x");
+uint256 hashGenesisBlock("0xe3209b561ed59fb0285c2116f0462b0b2818ad7d8807ef6626159a30e0cec68f");
 static CBigNum bnProofOfWorkLimit(~uint256(0) >> 20); // Dygitalcoin: starting difficulty is 1 / 2^12
 CBlockIndex* pindexGenesisBlock = NULL;
 int nBestHeight = -1;
@@ -1090,7 +1090,7 @@ int64 static GetBlockValue(int nHeight, int64 nFees)
     int64 nSubsidy = 20 * COIN;
 
     // Subsidy is cut in half every 840000 blocks, which will occur approximately every 4 years
-    nSubsidy >>= (nHeight / 10000); // Dygitalcoin: 840k blocks in ~4 years
+    nSubsidy >>= (nHeight / 190000); // Dygitalcoin: 840k blocks in ~4 years
 
     return nSubsidy + nFees;
 }
@@ -2746,7 +2746,7 @@ bool LoadBlockIndex()
         pchMessageStart[1] = 0xca;
         pchMessageStart[2] = 0xb6;
         pchMessageStart[3] = 0xd3;
-        hashGenesisBlock = uint256("0x");
+        hashGenesisBlock = uint256("0x4e88a4567f4efded7ebd55082fd89bb7df153127645b4bf02a20921a5a902c54");
     }
 
     //
@@ -2791,23 +2791,65 @@ bool InitBlockIndex() {
         block.hashPrevBlock = 0;
         block.hashMerkleRoot = block.BuildMerkleTree();
         block.nVersion = 1;
-        block.nTime    = 1513219446;
+        block.nTime    = 1527095339;
         block.nBits    = 0x1e0ffff0;
-        block.nNonce   = 2085105452;
+        block.nNonce   = 2085414289;
 
         if (fTestNet)
         {
-            block.nTime    = 1513219430;
-            block.nNonce   = 387675336;
+            block.nTime    = 1527095363;
+            block.nNonce   = 388757645;
         }
 
+if (true && block.GetHash() != hashGenesisBlock)
+        {
+            printf("Searching for genesis block...\n");
+            // This will figure out a valid hash and Nonce if you're
+            // creating a different genesis block:
+            uint256 hashTarget = CBigNum().SetCompact(block.nBits).getuint256();
+            uint256 thash;
+            char scratchpad[SCRYPT_SCRATCHPAD_SIZE];
+
+            loop
+            {
+#if defined(USE_SSE2)
+                // Detection would work, but in cases where we KNOW it always has SSE2,
+                // it is faster to use directly than to use a function pointer or conditional.
+#if defined(_M_X64) || defined(__x86_64__) || defined(_M_AMD64) || (defined(MAC_OSX) && defined(__i386__))
+                // Always SSE2: x86_64 or Intel MacOS X
+                scrypt_1024_1_1_256_sp_sse2(BEGIN(block.nVersion), BEGIN(thash), scratchpad);
+#else
+                // Detect SSE2: 32bit x86 Linux or Windows
+                scrypt_1024_1_1_256_sp(BEGIN(block.nVersion), BEGIN(thash), scratchpad);
+#endif
+#else
+                // Generic scrypt
+                scrypt_1024_1_1_256_sp_generic(BEGIN(block.nVersion), BEGIN(thash), scratchpad);
+#endif
+                if (thash <= hashTarget)
+                    break;
+                if ((block.nNonce & 0xFFF) == 0)
+                {
+                    printf("nonce %08X: hash = %s (target = %s)\n", block.nNonce, thash.ToString().c_str(), hashTarget.ToString().c_str());
+                }
+                ++block.nNonce;
+                if (block.nNonce == 0)
+                {
+                    printf("NONCE WRAPPED, incrementing time\n");
+                    ++block.nTime;
+                }
+            }
+            printf("block.nTime = %u \n", block.nTime);
+            printf("block.nNonce = %u \n", block.nNonce);
+            printf("block.GetHash = %s\n", block.GetHash().ToString().c_str());
+        }
 
         //// debug print
         uint256 hash = block.GetHash();
         printf("%s\n", hash.ToString().c_str());
         printf("%s\n", hashGenesisBlock.ToString().c_str());
         printf("%s\n", block.hashMerkleRoot.ToString().c_str());
-        assert(block.hashMerkleRoot == uint256("0x"));
+        assert(block.hashMerkleRoot == uint256("0x97ae67b707fe47b3f9de0aa81606022c176adc9bd6c710d8f3d75815297b0060"));
         block.print();
         assert(hash == hashGenesisBlock);
 
