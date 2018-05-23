@@ -1002,11 +1002,11 @@ bool GetTransaction(const uint256 &hash, CTransaction &txOut, uint256 &hashBlock
                     fseek(file, postx.nTxOffset, SEEK_CUR);
                     file >> txOut;
                 } catch (std::exception &e) {
-                    return error("%s() : deserialize or I/O error", __PRETTY_DGCCTION__);
+                    return error("%s() : deserialize or I/O error", __PRETTY_FUNCTION__);
                 }
                 hashBlock = header.GetHash();
                 if (txOut.GetHash() != hash)
-                    return error("%s() : txid mismatch", __PRETTY_DGCCTION__);
+                    return error("%s() : txid mismatch", __PRETTY_FUNCTION__);
                 return true;
             }
         }
@@ -3004,7 +3004,7 @@ bool LoadExternalBlockFile(FILE* fileIn, CDiskBlockPos *dbp)
                         break;
                 }
             } catch (std::exception &e) {
-                printf("%s() : Deserialize or I/O error caught during load\n", __PRETTY_DGCCTION__);
+                printf("%s() : Deserialize or I/O error caught during load\n", __PRETTY_FUNCTION__);
             }
         }
         fclose(fileIn);
