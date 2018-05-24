@@ -17,17 +17,17 @@ template <typename PARENT>
 class LOCKABLE AnnotatedMixin : public PARENT
 {
 public:
-    void lock() EXCLUSIVE_LOCK_FUNCTION()
+    void lock() EXCLUSIVE_LOCK_DGCCTION()
     {
       PARENT::lock();
     }
 
-    void unlock() UNLOCK_FUNCTION()
+    void unlock() UNLOCK_DGCCTION()
     {
       PARENT::unlock();
     }
 
-    bool try_lock() EXCLUSIVE_TRYLOCK_FUNCTION(true)
+    bool try_lock() EXCLUSIVE_TRYLOCK_DGCCTION(true)
     {
       return PARENT::try_lock();
     }

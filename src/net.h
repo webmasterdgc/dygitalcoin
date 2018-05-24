@@ -394,7 +394,7 @@ public:
 
 
     // TODO: Document the postcondition of this function.  Is cs_vSend locked?
-    void BeginMessage(const char* pszCommand) EXCLUSIVE_LOCK_FUNCTION(cs_vSend)
+    void BeginMessage(const char* pszCommand) EXCLUSIVE_LOCK_DGCCTION(cs_vSend)
     {
         ENTER_CRITICAL_SECTION(cs_vSend);
         assert(ssSend.size() == 0);
@@ -404,7 +404,7 @@ public:
     }
 
     // TODO: Document the precondition of this function.  Is cs_vSend locked?
-    void AbortMessage() UNLOCK_FUNCTION(cs_vSend)
+    void AbortMessage() UNLOCK_DGCCTION(cs_vSend)
     {
         ssSend.clear();
 
@@ -415,7 +415,7 @@ public:
     }
 
     // TODO: Document the precondition of this function.  Is cs_vSend locked?
-    void EndMessage() UNLOCK_FUNCTION(cs_vSend)
+    void EndMessage() UNLOCK_DGCCTION(cs_vSend)
     {
         if (mapArgs.count("-dropmessagestest") && GetRand(atoi(mapArgs["-dropmessagestest"])) == 0)
         {

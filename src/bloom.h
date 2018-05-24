@@ -14,7 +14,7 @@ class CTransaction;
 
 // 20,000 items with fp rate < 0.1% or 10,000 items and <0.0001%
 static const unsigned int MAX_BLOOM_FILTER_SIZE = 36000; // bytes
-static const unsigned int MAX_HASH_FUNCS = 50;
+static const unsigned int MAX_HASH_DGCCS = 50;
 
 // First two bits of nFlags control how much IsRelevantAndUpdate actually updates
 // The remaining bits are reserved
@@ -77,7 +77,7 @@ public:
     bool contains(const COutPoint& outpoint) const;
     bool contains(const uint256& hash) const;
 
-    // True if the size is <= MAX_BLOOM_FILTER_SIZE and the number of hash functions is <= MAX_HASH_FUNCS
+    // True if the size is <= MAX_BLOOM_FILTER_SIZE and the number of hash functions is <= MAX_HASH_DGCCS
     // (catch a filter which was just deserialized which was too big)
     bool IsWithinSizeConstraints() const;
 

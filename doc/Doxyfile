@@ -28,7 +28,7 @@ DOXYFILE_ENCODING      = UTF-8
 # The PROJECT_NAME tag is a single word (or a sequence of words surrounded 
 # by quotes) that should identify the project.
 
-PROJECT_NAME           = Funcoin
+PROJECT_NAME           = Dygitalcoin
 
 # The PROJECT_NUMBER tag can be used to enter a project or revision number. 
 # This could be handy for archiving the generated documentation or 
@@ -1495,12 +1495,12 @@ PREDEFINED             =
 
 EXPAND_AS_DEFINED      = 
 
-# If the SKIP_FUNCTION_MACROS tag is set to YES (the default) then 
+# If the SKIP_DGCCTION_MACROS tag is set to YES (the default) then 
 # doxygen's preprocessor will remove all references to function-like macros 
 # that are alone on a line, have an all uppercase name, and do not end with a 
 # semicolon, because these will confuse the parser if not removed.
 
-SKIP_FUNCTION_MACROS   = YES
+SKIP_DGCCTION_MACROS   = YES
 
 #---------------------------------------------------------------------------
 # Configuration::additions related to external references

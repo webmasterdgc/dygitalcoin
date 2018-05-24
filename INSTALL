@@ -1,9 +1,9 @@
-Building Funcoin
+Building Dygitalcoin
 
-See doc/readme-qt.rst for instructions on building Funcoin-Qt,
+See doc/readme-qt.rst for instructions on building Dygitalcoin-Qt,
 the intended-for-end-users, nice-graphical-interface, reference
-implementation of Funcoin.
+implementation of Dygitalcoin.
 
-See doc/build-*.txt for instructions on building funcoind,
+See doc/build-*.txt for instructions on building dygitalcoind,
 the intended-for-services, no-graphical-interface, reference
-implementation of Funcoin.
+implementation of Dygitalcoin.

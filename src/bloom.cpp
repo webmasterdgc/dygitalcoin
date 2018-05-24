@@ -25,7 +25,7 @@ vData(min((unsigned int)(-1  / LN2SQUARED * nElements * log(nFPRate)), MAX_BLOOM
 // See http://en.wikipedia.org/wiki/Bloom_filter for an explanation of these formulas
 isFull(false),
 isEmpty(false),
-nHashFuncs(min((unsigned int)(vData.size() * 8 / nElements * LN2), MAX_HASH_FUNCS)),
+nHashFuncs(min((unsigned int)(vData.size() * 8 / nElements * LN2), MAX_HASH_DGCCS)),
 nTweak(nTweakIn),
 nFlags(nFlagsIn)
 {
@@ -96,7 +96,7 @@ bool CBloomFilter::contains(const uint256& hash) const
 
 bool CBloomFilter::IsWithinSizeConstraints() const
 {
-    return vData.size() <= MAX_BLOOM_FILTER_SIZE && nHashFuncs <= MAX_HASH_FUNCS;
+    return vData.size() <= MAX_BLOOM_FILTER_SIZE && nHashFuncs <= MAX_HASH_DGCCS;
 }
 
 bool CBloomFilter::IsRelevantAndUpdate(const CTransaction& tx, const uint256& hash)
